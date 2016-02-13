@@ -7,6 +7,89 @@
     <title>Brighton Times</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <style type="text/css">
+      body { font-size: 1em;}
+      .content {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .header__menu {
+        display: none;
+      }
+
+      .hero, .top-news, .scores, .weather, .recent-news {
+        order: 10;
+      }
+
+      @media screen and (max-width: 549px) {
+        .header__logo {
+        height: 48px;
+        margin-right: 0.5em;
+      }
+      .header__title {
+        margin-left: 0;
+        font-size: 2em;
+        vertical-align: bottom; 
+      }
+      .nav {
+        z-index: 10;
+        background-color: #fff;
+        width: 300px;
+        position: absolute;
+        /* This trasform moves the drawer off canvas. */
+        -webkit-transform: translate(-300px, 0);
+        transform: translate(-300px, 0);
+        /* Optionally, we animate the drawer. */
+        transition: transform 0.3s ease;
+      }
+      .nav.open {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+      }
+      .nav__item {
+        display: list-item;
+        border-bottom: 1px solid #E0E0E0;
+        width: 100%;
+       text-align: left;
+      }
+      .header__menu {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        padding: 1em;
+      }
+      .header__menu svg {
+        width: 32px;
+          fill: #E0E0E0;
+      }
+    }
+
+      @media screen and (min-width: 600px) {
+        .hero {
+          order: 0;
+          width: 60%; 
+        }
+        .weather {
+          order: 1;
+          width: 40% 
+        }
+        .top-news {order: 2;}
+        .scores {order: 3;}
+        .recent-news {order: 4;}
+  
+      }
+      @media screen and (min-width: 700px) {
+        .hero {width: 50%; }
+        .top-news {order: 1; width: 50% }
+        .scores {order: 2; width: 60%; }
+        .weather {order: 3;}
+        .recent-news {order: 4;}
+      }
+      @media screen and (min-width: 850px){
+      main, .heder_inner, .nav, .content {width: 850px; margin-right: auto; margin-left: auto;}
+    }
+
+    </style>
   </head>
   <body>
 
@@ -16,6 +99,11 @@
         <h1 class="header__title">
           The Brighton Times
         </h1>
+        <a id="menu" class="header__menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+          </svg>
+        </a>
       </div>
     </header>
 
@@ -29,18 +117,14 @@
     </nav>
 
     <main>
-
-      <section class="content">
-        <div>
+     <section class="content">
         <section class="hero">
           <article class="description">
             <h2>Absolutely astonishing breaking news!</h2>
             <p>Organic raw denim Vice keffiyeh lomo Kickstarter art lomo Kickstarter art four loko. Organic raw denim Vice keffiyeh lomo Kickstarter art lomo Kickstarter art four loko.</p>
           </article>
         </section>
-      </div>
-      <br>
-      <div>
+
         <section class="news top-news">
           <h2 class="news__title">Top news <a href="#" class="news__more">+ more</a></h2>
           <ul>
@@ -58,8 +142,7 @@
             </li>
           </ul>
         </section>
-      </div>
-      <div>
+
         <section class="scores">
           <table class="scores__table">
             <thead>
@@ -110,13 +193,12 @@
             </tbody>
           </table>
         </section>
-      </div>
-      <div>
+
         <section class="weather">
           <span class="weather__location">Brighton, UK</span>
           <span class="weather__desc">Sunny</span>
           <span class="weather__today">
-          <img class="weather__today__image" src="images/weather.png" alt="icon of a partially sunny day"><span class="weather__today__temp">13</span><span class="weather__today__deg">&deg;C</span>
+          <img class="weather__today__image" src="images/weather.png" alt="icon of a partially cloudy day"><span class="weather__today__temp">13</span><span class="weather__today__deg">&deg;C</span>
           </span>
           <ul class="weather__next">
             <li class="weather__next__item">
@@ -142,8 +224,7 @@
             </li>
           </ul>
         </section>
-      </div>
-      <div>
+
         <section class="news recent-news">
           <h2 class="news__title">Latest news <a href="#" class="news__more">+ more</a></h2>
           <ul>
@@ -176,7 +257,6 @@
             </li>
           </ul>
         </section>
-      </div>
       </section>
 
       <footer>
@@ -186,6 +266,25 @@
           <li><a href="#">RSS</a></li>
         </ul>
       </footer>
+
     </main>
+
+    <script>
+      /*
+       * Open the drawer when the menu ison is clicked.
+       */
+      var menu = document.querySelector('#menu');
+      var main = document.querySelector('main');
+      var drawer = document.querySelector('.nav');
+
+      menu.addEventListener('click', function(e) {
+        drawer.classList.toggle('open');
+        e.stopPropagation();
+      });
+      main.addEventListener('click', function() {
+        drawer.classList.remove('open');
+      });
+
+    </script>
   </body>
 </html>
